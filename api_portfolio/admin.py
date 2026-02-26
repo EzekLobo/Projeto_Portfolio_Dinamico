@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .Models import Projeto 
 
-# Register your models here.
+@admin.register(Projeto)
+class ProjetoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'tecnologia', 'criado_em')
