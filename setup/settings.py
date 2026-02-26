@@ -121,3 +121,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+import os
+
+# Caminho na URL para acessar o arquivo
+MEDIA_URL = '/media/'
+
+# Pasta física no seu computador onde as fotos ficarão
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
