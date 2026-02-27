@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'dportfolio',
         'USER': 'portfolio_cwhe_user',
         'PASSWORD': 'GXTcusRTsaePNaIr1dgZ2iVupTqX4ASW',
-        'HOST': 'dpg-d6ghttjuibrs739d7vjg-a',
+        'HOST': 'dpg-d6ghttjuibrs739d7vjg-a.oregon-postgres.render.com/portfolio_cwhe',
         'PORT': '5432',
     }
 }
