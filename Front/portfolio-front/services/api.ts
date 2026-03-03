@@ -1,7 +1,7 @@
 import { Perfil, Experiencia, Projeto } from "@/types";
 
 // Note o /v1 incluído conforme o seu urls.py do projeto
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
+const API_URL = process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1` : 'http://127.0.0.1:8000/api/v1';
 
 /**
  * Busca os dados do perfil.
