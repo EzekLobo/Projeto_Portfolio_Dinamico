@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Projeto } from "@/types";
 
+// URL base do seu backend para as imagens
+const BASE_URL = "https://ezeklobo.pythonanywhere.com";
+
 export default function ProjectSlider({ projetos = [] }: { projetos: Projeto[] }) {
   const sliderRef = useRef<HTMLDivElement>(null);
   
@@ -108,14 +111,16 @@ export default function ProjectSlider({ projetos = [] }: { projetos: Projeto[] }
   if (!projetos.length) return null;
 
   return (
-    <div className="relative w-full pt-4 pb-16 overflow-hidden select-none">
+    // pb-24 garante que o card não seja cortado embaixo no mobile
+    <div className="relative w-full pt-4 pb-24 overflow-hidden select-none">
 
       <div className="pointer-events-none absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-black to-transparent z-10" />
       <div className="pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-black to-transparent z-10" />
 
+      {/* Botão Esquerdo posicionado mais acima (top-[40%]) */}
       <button
         onClick={() => scrollByAmount("left")}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-2xl hover:bg-red-600 hover:scale-110 transition-all duration-300 shadow-lg"
+        className="absolute left-4 md:left-6 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-2xl hover:bg-red-600 hover:scale-110 transition-all duration-300 shadow-lg"
       >
         ‹
       </button>
@@ -126,7 +131,7 @@ export default function ProjectSlider({ projetos = [] }: { projetos: Projeto[] }
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex items-center py-8 gap-8 overflow-x-auto overflow-y-hidden no-scrollbar px-[25vw] ${
+        className={`flex items-center py-8 gap-8 overflow-x-auto overflow-y-hidden no-scrollbar px-[15vw] md:px-[25vw] ${
           isDragging 
             ? "cursor-grabbing" 
             : "cursor-grab scroll-smooth snap-x snap-mandatory"
@@ -160,9 +165,10 @@ export default function ProjectSlider({ projetos = [] }: { projetos: Projeto[] }
         })}
       </div>
 
+      {/* Botão Direito posicionado mais acima (top-[40%]) */}
       <button
         onClick={() => scrollByAmount("right")}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-2xl hover:bg-red-600 hover:scale-110 transition-all duration-300 shadow-lg"
+        className="absolute right-4 md:right-6 top-[40%] -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-2xl hover:bg-red-600 hover:scale-110 transition-all duration-300 shadow-lg"
       >
         ›
       </button>
@@ -183,9 +189,13 @@ function ProjectCard({
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const capaUrl = projeto.capa 
+    ? (projeto.capa.startsWith('http') ? projeto.capa : `${BASE_URL}${projeto.capa}`)
+    : null;
+
   return (
     <div
-      className="shrink-0 w-80 md:w-96 h-[420px] [perspective:1000px] cursor-pointer"
+      className="shrink-0 w-[75vw] md:w-96 h-[420px] [perspective:1000px] cursor-pointer"
       onMouseEnter={() => !isDragging && isActive && setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
       onClick={() => {
@@ -203,13 +213,13 @@ function ProjectCard({
       >
         {/* FRENTE */}
         <div
-          className="absolute inset-0 bg-[#0F0F0F] rounded-3xl overflow-hidden border border-white/10"
+          className="absolute inset-0 bg-[#0F0F0F] rounded-3xl overflow-hidden border border-white/10 shadow-xl"
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className="h-52 relative bg-gray-900 pointer-events-none">
-            {projeto.capa && (
+            {capaUrl && (
               <Image
-                src={projeto.capa}
+                src={capaUrl}
                 alt={projeto.titulo}
                 fill
                 unoptimized
@@ -224,7 +234,7 @@ function ProjectCard({
               {projeto.titulo}
             </h3>
 
-            <p className="text-gray-400 text-sm mt-2 line-clamp-3">
+            <p className="text-gray-400 text-sm mt-2 line-clamp-2 md:line-clamp-3">
               {projeto.descricao}
             </p>
 
@@ -232,7 +242,7 @@ function ProjectCard({
               {projeto.tecnologia?.split(",").map((tech) => (
                 <span
                   key={tech}
-                  className="text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20"
+                  className="text-[10px] md:text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20"
                 >
                   {tech.trim()}
                 </span>
@@ -243,7 +253,7 @@ function ProjectCard({
 
         {/* VERSO */}
         <div
-          className="absolute inset-0 bg-[#1A1A1A] rounded-3xl p-8 border border-red-500/30 flex flex-col justify-between items-center text-center"
+          className="absolute inset-0 bg-[#1A1A1A] rounded-3xl p-8 border border-red-500/30 flex flex-col justify-between items-center text-center shadow-2xl"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -253,7 +263,7 @@ function ProjectCard({
             <h3 className="text-lg font-bold text-red-500 mb-4 italic">
               Sobre o Projeto
             </h3>
-            <p className="text-gray-200 text-sm leading-relaxed pointer-events-none">
+            <p className="text-gray-200 text-xs md:text-sm leading-relaxed pointer-events-none">
               {projeto.descricao}
             </p>
           </div>
