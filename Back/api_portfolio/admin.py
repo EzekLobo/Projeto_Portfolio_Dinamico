@@ -37,9 +37,10 @@ class LeituraAmbienteAdmin(admin.ModelAdmin):
 
 @admin.register(ControleDispositivo)
 class ControleDispositivoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'dispositivo', 'mandar_oi')
+    list_display = ('id', 'dispositivo', 'quantidade_ois')
     list_display_links = ('id', 'dispositivo')
-    # Permite você ativar o "Oi" direto pela tela de listagem do Admin!
-    list_editable = ('mandar_oi',) 
-    list_filter = ('mandar_oi',)
+    
+    # Permite editar a quantidade de cliques na fila direto pela tela do Admin
+    list_editable = ('quantidade_ois',) 
+    list_filter = ('quantidade_ois',)
     search_fields = ('dispositivo',)

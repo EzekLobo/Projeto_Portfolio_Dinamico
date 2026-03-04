@@ -1,6 +1,12 @@
 from django.db import models
 
+class MensagemOi(models.Model):
+    # Identifica para qual placa a mensagem vai (ex: pico_w_01)
+    dispositivo_alvo = models.CharField(max_length=50)
+    nome_visitante = models.CharField(max_length=100)
+    # Atributo para saber se o Pico W já leu e mostrou essa mensagem específica
+    lida = models.BooleanField(default=False)
+    criado_em = models.DateTimeField(auto_now_add=True)
 
-class ControleDispositivo(models.Model):
-    dispositivo = models.CharField(max_length=50, unique=True)
-    mandar_oi = models.BooleanField(default=False) # Fica 'True' quando alguém clica no site
+    def __str__(self):
+        return f"{self.nome_visitante} -> {self.dispositivo_alvo}"
