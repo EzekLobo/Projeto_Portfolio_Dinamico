@@ -36,7 +36,7 @@ export default async function Home() {
         <Experience experiencias={experiencias} />
         
         {/* Projects Carousel Section */}
-        <section id="projects" className="py-24 border-t border-white/5 overflow-hidden bg-black/20">
+        <section id="projects" className="border-t border-white/5 overflow-hidden bg-black/20">
            <div className="max-w-7xl mx-auto px-6 mb-8 text-left relative z-20">
               <h2 className="text-3xl font-bold mb-2">
                 Meus <span className="text-brand-red">Projetos</span>

@@ -28,3 +28,23 @@ export interface Projeto {
   capa: string;
   link_github: string;
 }
+export interface LeituraAmbiente {
+  id: number;
+  dispositivo: string;
+  temperatura: number;
+  umidade: number;
+  data_criacao: string; // O Django envia como string ISO
+}
+
+export interface ControleDispositivo {
+  id: number;
+  dispositivo: string;
+  ultima_mensagem: string;
+  status_pendente: boolean;
+}
+
+export interface RespostaChecarOi {
+  tem_oi: boolean;
+  total: number;
+  mensagens: string[];
+}
